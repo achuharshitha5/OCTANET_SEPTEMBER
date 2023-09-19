@@ -1,1 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List with Priorities</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg,rgb(219, 185, 241),rgb(232, 68, 247));
+        }
+        .container {
+            max-width: 550px;
+            margin: 0 auto;
+            padding: 20px;
+             background: bisque;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            
+        }
+        .task-list {
+            list-style-type: none;
+        
+        }
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgb(117, 172, 235);
+            font-weight: 900;
+        }
+        .task label {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+        .task button {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .task button:hover {
+            background-color: darkred;
+        }
+        #task-list{
+             max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #task-input{
+            margin-right: 20px;
+            height: 0.9cm;
+            width:5cm;
+        }
+        #priority-select{
+            margin-right: 20px;
+            height: 1cm;
+            width:5cm;
+        }
+        #b1{
+            height: 1cm;
+            width:2cm;
+            cursor: pointer;
+        
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><center>To-Do List </center></h1>
+        <form id="todo-form">
+            <input type="text" id="task-input" placeholder="Add a new task" required>
+            <select id="priority-select">
+                <option value="low">Low Priority</option>
+                <option value="medium">Medium Priority</option>
+                <option value="high">High Priority</option>
+            </select>
+            <button type="submit" id="b1">Add</button>
+        </form>
+        <ul class="task-list" id="task-list">
+           
+        </ul>
+    </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const todoForm = document.getElementById("todo-form");
+            const taskInput = document.getElementById("task-input");
+            const prioritySelect = document.getElementById("priority-select");
+            const taskList = document.getElementById("task-list");
+
+            todoForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const taskText = taskInput.value.trim();
+                const taskPriority = prioritySelect.value;
+
+                if (taskText === "") return;
+
+                const taskItem = document.createElement("li");
+                taskItem.classList.add("task");
+                taskItem.innerHTML = `
+                    <label>${taskText} (Priority: ${taskPriority})</label>
+                    <button class="delete-btn">Delete</button>
+                `;
+
+                taskList.appendChild(taskItem);
+
+                
+                taskInput.value = "";
+                prioritySelect.value = "low";
+
+                
+                const deleteButton = taskItem.querySelector(".delete-btn");
+                deleteButton.addEventListener("click", function () {
+                    taskList.removeChild(taskItem);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
